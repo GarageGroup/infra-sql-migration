@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,6 +18,8 @@ internal sealed class MigrationFileReader : IMigrationFileReader
     }
 
     public Task<string> ReadMigrationQueryAsync(string filePath, CancellationToken cancellationToken)
-        =>
-        File.ReadAllTextAsync(filePath, cancellationToken);
+    {
+        var fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, filePath);
+        return File.ReadAllTextAsync(fullPath, cancellationToken);
+    }
 }
