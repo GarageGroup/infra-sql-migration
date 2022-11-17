@@ -62,7 +62,7 @@ internal sealed class DbChangeLogApi : IDbChangeLogApi
             query: BuildMigrationTransactionQuery(migrationQuery),
             parameters: new FlatArray<DbParameter>(
                 new("Id", migrationItem.Id),
-                new("Comment", migrationItem.Comment)));
+                new("Comment", migrationItem.Comment ?? string.Empty)));
 
         _ = await sqlApi.ExecuteNonQueryAsync(sqlRequest, cancellationToken).ConfigureAwait(false);
     }
@@ -84,10 +84,10 @@ internal sealed class DbChangeLogApi : IDbChangeLogApi
             return DbChangeLogInsertQuery;
         }
 
-        return $$"""
+        return $"""
             BEGIN TRANSACTION;
-                {{migrationQuery}}
-                {{DbChangeLogInsertQuery}}
+                {migrationQuery}
+                {DbChangeLogInsertQuery}
             COMMIT;
             """;
     }

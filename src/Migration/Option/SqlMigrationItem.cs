@@ -4,7 +4,7 @@ namespace GGroupp.Infra;
 
 public sealed record class SqlMigrationItem
 {
-    public SqlMigrationItem(string id, string filePath, [AllowNull] string comment)
+    public SqlMigrationItem(string id, string filePath, [AllowNull] string comment = null)
     {
         Id = id ?? string.Empty;
         FilePath = filePath ?? string.Empty;
