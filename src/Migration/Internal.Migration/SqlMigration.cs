@@ -45,7 +45,7 @@ internal sealed class SqlMigration
             using var cancellationTokenSource = GetCancellationTokenSource();
             var cancellationToken = cancellationTokenSource.Token;
 
-            logger.LogInformation("Check if ChangeLog table exists");
+            logger.LogInformation("Check if the change log table exists");
             await changeLogApi.EnsureTableAsync(cancellationToken).ConfigureAwait(false);
 
             logger.LogInformation("Get the last change log from the database");
@@ -60,11 +60,11 @@ internal sealed class SqlMigration
 
             foreach (var migration in notExecutedMigrations)
             {
-                logger.LogInformation("Execute migration {migrationId}", migration.Id);
+                logger.LogInformation("Execute the migration {migrationId}", migration.Id);
                 await changeLogApi.ExecuteMigrationQueryAsync(migration, cancellationToken).ConfigureAwait(false);
             }
 
-            logger.LogInformation("All migration have been finished successfully");
+            logger.LogInformation("All migrations have been finished successfully");
         }
         catch (OperationCanceledException ex)
         {
@@ -105,7 +105,6 @@ internal sealed class SqlMigration
             if (migrationItem == lastMigration)
             {
                 alreadyFound = true;
-                continue;
             }
         }
 
