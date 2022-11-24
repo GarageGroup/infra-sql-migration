@@ -54,17 +54,17 @@ internal sealed class SqlMigration
             var notExecutedMigrations = GetNotExecutedMigrations(dbChangeLogId);
             if (notExecutedMigrations.Count is not > 0)
             {
-                logger.LogInformation("All migrations were already executed");
+                logger.LogInformation("All migrations were already applied");
                 return;
             }
 
             foreach (var migration in notExecutedMigrations)
             {
-                logger.LogInformation("Execute the migration {migrationId}", migration.Id);
+                logger.LogInformation("Apply the migration {migrationId}", migration.Id);
                 await changeLogApi.ExecuteMigrationQueryAsync(migration, cancellationToken).ConfigureAwait(false);
             }
 
-            logger.LogInformation("All migrations have been finished successfully");
+            logger.LogInformation("All migrations have been applied successfully");
         }
         catch (OperationCanceledException ex)
         {
@@ -82,13 +82,13 @@ internal sealed class SqlMigration
     {
         if (dbChangeLogId is null)
         {
-            return option.Migrations;
+            return option.Migrations.ToArray();
         }
 
-        var lastMigration = option.Migrations.FirstOrDefault(IsLastMigration);
+        var lastMigration = option.Migrations.AsEnumerable().FirstOrDefault(IsLastMigration);
         if (lastMigration is null)
         {
-            return option.Migrations;
+            return option.Migrations.ToArray();
         }
 
         var resultList = new List<SqlMigrationItem>(option.Migrations.Length);
