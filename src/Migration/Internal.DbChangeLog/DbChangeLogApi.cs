@@ -35,11 +35,11 @@ internal sealed class DbChangeLogApi : IDbChangeLogApi
 
     public async ValueTask EnsureTableAsync(CancellationToken cancellationToken)
         =>
-        await sqlApi.ExecuteNonQueryAsync(new(DbChangeLogCreateTableQuery), cancellationToken).ConfigureAwait(false);
+        await sqlApi.ExecuteNonQueryAsync(new DbQuery(DbChangeLogCreateTableQuery), cancellationToken).ConfigureAwait(false);
 
     public async ValueTask<DbChangeLogId?> GetLastChangeLogIdAsync(CancellationToken cancellationToken)
     {
-        var sqlRequest = new DbRequest(DbChangeLogIdLastGetQuery);
+        var sqlRequest = new DbQuery(DbChangeLogIdLastGetQuery);
         var dbResult = await sqlApi.QueryEntityOrAbsentAsync<DbChangeLogId>(sqlRequest, cancellationToken).ConfigureAwait(false);
 
         return dbResult.Fold(AsNullable, GetNull);
@@ -57,7 +57,7 @@ internal sealed class DbChangeLogApi : IDbChangeLogApi
     {
         var migrationQuery = await ReadMigrationQueryAsync(migrationItem, cancellationToken).ConfigureAwait(false);
 
-        var sqlRequest = new DbRequest(
+        var sqlRequest = new DbQuery(
             query: BuildMigrationTransactionQuery(migrationQuery),
             parameters: new FlatArray<DbParameter>(
                 new("Id", migrationItem.Id),
