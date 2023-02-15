@@ -2,7 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace GGroupp.Infra;
 
-public sealed record class SqlMigrationItem
+internal sealed record class SqlMigrationItem
 {
     public SqlMigrationItem(string id, string filePath, [AllowNull] string comment = null)
     {
