@@ -17,7 +17,7 @@ internal sealed class MigrationFileReader : IMigrationFileReader
     {
     }
 
-    public Task<string> ReadMigrationQueryAsync(string filePath, CancellationToken cancellationToken)
+    public Task<string> ReadAsync(string filePath, CancellationToken cancellationToken)
     {
         var fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, filePath);
         return File.ReadAllTextAsync(fullPath, cancellationToken);

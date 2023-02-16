@@ -31,16 +31,16 @@ jobs:
         -p ${{ secrets.GG_NUGET_SOURCE_USER_PASSWORD }}
         --store-password-in-clear-text
 
-    # Migration
+    # Migration.Handler
 
-    - name: Restore Migration
-      run: dotnet restore ./src/*/Migration.csproj
+    - name: Restore Migration.Handler
+      run: dotnet restore ./src/*/Migration.Handler.csproj
 
-    - name: Build Migration
-      run: dotnet build ./src/*/Migration.csproj --no-restore  -c Release
+    - name: Build Migration.Handler
+      run: dotnet build ./src/*/Migration.Handler.csproj --no-restore  -c Release
 
-    - name: Pack Migration
-      run: dotnet pack ./src/*/Migration.csproj --no-restore -o ~/nuget  -c Release
+    - name: Pack Migration.Handler
+      run: dotnet pack ./src/*/Migration.Handler.csproj --no-restore -o ~/nuget  -c Release
 
     # Push
 
