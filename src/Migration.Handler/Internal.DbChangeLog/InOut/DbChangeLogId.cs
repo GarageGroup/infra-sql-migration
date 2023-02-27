@@ -1,15 +1,16 @@
+using System;
+
 namespace GGroupp.Infra;
 
-internal sealed partial class DbChangeLogId : IDbEntity<DbChangeLogId>
+[DbEntity]
+internal sealed partial record class DbChangeLogId : IDbEntity<DbChangeLogId>
 {
-    public static DbChangeLogId ReadEntity(IDbItem dbItem)
-        =>
-        new(
-            id: dbItem.GetFieldValueOrThrow("Id").CastToString() ?? string.Empty);
+    private readonly string? id;
 
-    private DbChangeLogId(string id)
-        =>
-        Id = id ?? string.Empty;
-
-    public string Id { get; }
+    [DbField]
+    public string Id
+    {
+        get => id.OrEmpty();
+        init => id = value.OrNullIfEmpty();
+    }
 }
