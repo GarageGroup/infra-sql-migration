@@ -3,6 +3,7 @@ FROM mcr.microsoft.com/dotnet/runtime:7.0
 WORKDIR /app
 
 COPY ./publish ./
+RUN ls -la /app
 
 ENV ConnectionStrings__SqlDb $CONNECTION_STRING
 ENV Migrations__ConfigPath $CONFIG_PATH
