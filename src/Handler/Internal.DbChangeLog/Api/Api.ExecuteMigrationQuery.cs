@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,13 +9,16 @@ partial class DbChangeLogApi
     {
         var migrationQuery = await ReadMigrationQueryAsync(migrationItem, cancellationToken).ConfigureAwait(false);
 
-        var sqlRequest = new DbQuery(
-            query: BuildMigrationQuery(migrationQuery),
-            parameters: new FlatArray<DbParameter>(
+        var migrationRequest = new DbQuery(migrationQuery);
+        _ = await sqlApi.ExecuteNonQueryAsync(migrationRequest, cancellationToken).ConfigureAwait(false);
+
+        var logInsertRequest = new DbQuery(
+            query: DbChangeLogInsertQuery,
+            parameters: new(
                 new("Id", migrationItem.Id),
                 new("Comment", migrationItem.Comment ?? string.Empty)));
 
-        _ = await sqlApi.ExecuteNonQueryAsync(sqlRequest, cancellationToken).ConfigureAwait(false);
+        _ = await sqlApi.ExecuteNonQueryAsync(logInsertRequest, cancellationToken).ConfigureAwait(false);
     }
 
     private ValueTask<string> ReadMigrationQueryAsync(SqlMigrationItem migrationItem, CancellationToken cancellationToken)
@@ -27,18 +29,5 @@ partial class DbChangeLogApi
         }
 
         return new(fileReader.ReadAsync(option.BasePath, migrationItem.FilePath, cancellationToken));
-    }
-
-    private static string BuildMigrationQuery(string migrationQuery)
-    {
-        if (string.IsNullOrEmpty(migrationQuery))
-        {
-            return DbChangeLogInsertQuery;
-        }
-
-        return $"""
-                {migrationQuery}
-                {DbChangeLogInsertQuery}
-            """;
     }
 }

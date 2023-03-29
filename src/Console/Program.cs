@@ -7,7 +7,7 @@ static class Program
     static Task Main(string[] args)
         =>
         MicrosoftDbProvider.Configure("SqlDb")
-        .UseSqlApi(true)
+        .UseSqlApi()
         .UseSqlMigrateHandler("Migrations")
         .RunConsoleAsync(args);
 }

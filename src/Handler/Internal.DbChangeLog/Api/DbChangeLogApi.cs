@@ -31,6 +31,4 @@ internal sealed partial class DbChangeLogApi : IDbChangeLogApi
         this.fileReader = fileReader;
         this.option = option;
     }
-
-    
 }
