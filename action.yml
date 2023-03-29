@@ -9,7 +9,7 @@ inputs:
     required: true
 runs:
   using: 'docker'
-  image: 'Dockerfile'
+  image: 'docker://ghcr.io/ggrouppfoundation/gg-sql-migration:latest'
   env:
     CONNECTION_STRING: ${{ inputs.connection_string }}
     CONFIG_PATH: ${{ inputs.config_path }}
