@@ -3,9 +3,8 @@ FROM mcr.microsoft.com/dotnet/runtime:7.0
 WORKDIR /app
 
 COPY ./publish ./
-RUN ls -la /app
 
 ENV ConnectionStrings__SqlDb $CONNECTION_STRING
 ENV Migrations__ConfigPath $CONFIG_PATH
 
-ENTRYPOINT ["dotnet", "GGroupp.Infra.Sql.Migration.Console.dll"]
+ENTRYPOINT ["dotnet", "/app/GGroupp.Infra.Sql.Migration.Console.dll"]
