@@ -48,6 +48,7 @@ jobs:
       - name: Build image and push to GitHub Container Registry
         uses: docker/build-push-action@v4
         with:
+          context: .
           tags: |
             ghcr.io/ggrouppfoundation/gg-sql-migration:${{ steps.vars.outputs.tag }}
             ghcr.io/ggrouppfoundation/gg-sql-migration:latest
