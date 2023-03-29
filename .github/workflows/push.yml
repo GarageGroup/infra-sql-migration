@@ -45,14 +45,16 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      
+
       - name: Build image and push to GitHub Container Registry
         uses: docker/build-push-action@v4
         with:
           context: .
+          file: ./Dockerfile
           tags: |
             ghcr.io/ggrouppfoundation/gg-sql-migration:${{ steps.vars.outputs.tag }}
             ghcr.io/ggrouppfoundation/gg-sql-migration:latest
           push: true
+
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
