@@ -1,4 +1,4 @@
-name: 'GGSqlMigration'
+name: 'gg-sql-migration'
 description: 'SQL migration'
 inputs:
   connection_string:
