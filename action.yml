@@ -1,0 +1,20 @@
+name: 'GGSqlMigration'
+description: 'SQL migration'
+inputs:
+  connection_string:
+    description: 'Connection string to the database'
+    required: true
+  config_path:
+    description: 'Path to the configuration file'
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    CONNECTION_STRING: ${{ inputs.connection_string }}
+    CONFIG_PATH: ${{ inputs.config_path }}
+  args:
+    - '--build-arg'
+    - 'GG_NUGET_SOURCE_URL=${{ secrets.GG_NUGET_SOURCE_URL }}'
+    - 'GG_NUGET_SOURCE_USER=${{ secrets.GG_NUGET_SOURCE_USER_NAME }}'
+    - 'GG_NUGET_SOURCE_PASSWORD=${{ secrets.GG_NUGET_SOURCE_USER_PASSWORD }}'

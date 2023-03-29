@@ -15,14 +15,6 @@ jobs:
       with:
         dotnet-version: '7.0.x'
 
-     # Add NuGet Sources
-
-    - name: Create Local NuGet Directory
-      run: mkdir ~/nuget
-
-    - name: Add Local Nuget Source
-      run: dotnet nuget add source ~/nuget
-
     - name: Add GGroupp NuGet Source
       run: >
         dotnet nuget add source ${{ secrets.GG_NUGET_SOURCE_URL }}
@@ -31,23 +23,8 @@ jobs:
         -p ${{ secrets.GG_NUGET_SOURCE_USER_PASSWORD }}
         --store-password-in-clear-text
 
-    # Migration.Handler
+    - name: Restore Console
+      run: dotnet restore ./src/*/Console.csproj
 
-    - name: Restore Migration.Handler
-      run: dotnet restore ./src/*/Migration.Handler.csproj
-
-    - name: Build Migration.Handler
-      run: dotnet build ./src/*/Migration.Handler.csproj --no-restore  -c Release
-
-    - name: Pack Migration.Handler
-      run: dotnet pack ./src/*/Migration.Handler.csproj --no-restore -o ~/nuget  -c Release
-
-    # Push
-
-    - name: Push Packages
-      if: ${{ github.ref == 'refs/heads/main' }}
-      run: >
-        dotnet nuget push "../../../nuget/*.nupkg"
-        -s ${{ secrets.GG_NUGET_SOURCE_URL }}
-        -k ${{ secrets.GG_NUGET_SOURCE_USER_PASSWORD }}
-        --skip-duplicate
+    - name: Build Console
+      run: dotnet build ./src/*/Console.csproj --no-restore  -c Release
