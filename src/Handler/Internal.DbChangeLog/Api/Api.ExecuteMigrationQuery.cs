@@ -11,7 +11,7 @@ partial class DbChangeLogApi
         var migrationQuery = await ReadMigrationQueryAsync(migrationItem, cancellationToken).ConfigureAwait(false);
 
         var sqlRequest = new DbQuery(
-            query: BuildMigrationTransactionQuery(migrationQuery),
+            query: BuildMigrationQuery(migrationQuery),
             parameters: new FlatArray<DbParameter>(
                 new("Id", migrationItem.Id),
                 new("Comment", migrationItem.Comment ?? string.Empty)));
@@ -29,7 +29,7 @@ partial class DbChangeLogApi
         return new(fileReader.ReadAsync(option.BasePath, migrationItem.FilePath, cancellationToken));
     }
 
-    private static string BuildMigrationTransactionQuery(string migrationQuery)
+    private static string BuildMigrationQuery(string migrationQuery)
     {
         if (string.IsNullOrEmpty(migrationQuery))
         {
@@ -37,10 +37,8 @@ partial class DbChangeLogApi
         }
 
         return $"""
-            BEGIN TRANSACTION;
                 {migrationQuery}
                 {DbChangeLogInsertQuery}
-            COMMIT;
             """;
     }
 }
