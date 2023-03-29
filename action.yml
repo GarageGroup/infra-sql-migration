@@ -10,6 +10,8 @@ inputs:
 runs:
   using: 'docker'
   image: 'docker://ghcr.io/ggrouppfoundation/gg-sql-migration:latest'
-  env:
-    CONNECTION_STRING: ${{ inputs.connection_string }}
-    CONFIG_PATH: ${{ inputs.config_path }}
+  args:
+    - "--env"
+    - "ConnectionStrings__SqlDb=${{ inputs.connection_string }}"
+    - "--env"
+    - "Migrations__ConfigPath=${{ inputs.config_path }}"
