@@ -14,6 +14,7 @@ runs:
         docker run --rm \
           -e ConnectionStrings__SqlDb="${{ inputs.connection_string }}" \
           -e Migrations__ConfigPath="${{ inputs.config_path }}" \
-          -v ${{ github.workspace }}:/app \
+          -e Migrations__BasePath="../data" \
+          -v ${{ github.workspace }}:/data \
           ghcr.io/ggrouppfoundation/gg-sql-migration:latest
       shell: bash

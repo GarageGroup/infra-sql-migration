@@ -8,6 +8,6 @@ static class Program
         =>
         MicrosoftDbProvider.Configure("SqlDb")
         .UseSqlApi()
-        .UseSqlMigrateHandler("Migrations:ConfigPath")
+        .UseSqlMigrateHandler("Migrations")
         .RunConsoleAsync(args);
 }

@@ -7,10 +7,10 @@ namespace GGroupp.Infra;
 
 public static class SqlMigrateHandlerDependency
 {
-    private const string DefaultConfigPathKey = "Migrations:ConfigPath";
+    private const string DefaultConfigSection = "Migrations";
 
     public static Dependency<SqlMigrateHandler> UseSqlMigrateHandler(
-        this Dependency<ISqlApi> dependency, string configPathKey = DefaultConfigPathKey)
+        this Dependency<ISqlApi> dependency, string configSectionName = DefaultConfigSection)
     {
         ArgumentNullException.ThrowIfNull(dependency);
 
@@ -21,50 +21,12 @@ public static class SqlMigrateHandlerDependency
             ArgumentNullException.ThrowIfNull(serviceProvider);
             ArgumentNullException.ThrowIfNull(sqlApi);
 
-            var option = serviceProvider.GetServiceOrThrow<IConfiguration>().GetSqlMigrationOption(configPathKey ?? string.Empty);
+            var option = serviceProvider.GetServiceOrThrow<IConfiguration>().GetRequiredSection(configSectionName).GetSqlMigrationOption();
 
             return SqlMigrateHandler.InternalCreate(
-                changeLogApi: new DbChangeLogApi(sqlApi, MigrationFileReader.Instance),
+                changeLogApi: new DbChangeLogApi(sqlApi, MigrationFileReader.Instance, option),
                 migrationItemApi: new SqlMigrationItemApi(MigrationFileReader.Instance, option),
                 loggerFactory: serviceProvider.ResolveLoggerFactory());
-        }
-    }
-
-    public static Dependency<SqlMigrateHandler> UseSqlMigrateHandler(
-        this Dependency<ISqlApi> dependency, Func<IServiceProvider, SqlMigrationOption> optionResolver)
-    {
-        ArgumentNullException.ThrowIfNull(dependency);
-        ArgumentNullException.ThrowIfNull(optionResolver);
-
-        return dependency.With(optionResolver).Fold(CreateHandler);
-
-        static SqlMigrateHandler CreateHandler(IServiceProvider serviceProvider, ISqlApi sqlApi, SqlMigrationOption option)
-        {
-            ArgumentNullException.ThrowIfNull(serviceProvider);
-            ArgumentNullException.ThrowIfNull(sqlApi);
-
-            return SqlMigrateHandler.InternalCreate(
-                changeLogApi: new DbChangeLogApi(sqlApi, MigrationFileReader.Instance),
-                migrationItemApi: new SqlMigrationItemApi(MigrationFileReader.Instance, option),
-                loggerFactory: serviceProvider.ResolveLoggerFactory());
-        }
-    }
-
-    public static Dependency<SqlMigrateHandler> UseSqlMigrateHandler(
-        this Dependency<ISqlApi, ILoggerFactory, SqlMigrationOption> dependency)
-    {
-        ArgumentNullException.ThrowIfNull(dependency);
-        return dependency.Fold(CreateHandler);
-
-        static SqlMigrateHandler CreateHandler(ISqlApi sqlApi, ILoggerFactory loggerFactory, SqlMigrationOption option)
-        {
-            ArgumentNullException.ThrowIfNull(sqlApi);
-            ArgumentNullException.ThrowIfNull(loggerFactory);
-
-            return SqlMigrateHandler.InternalCreate(
-                changeLogApi: new DbChangeLogApi(sqlApi, MigrationFileReader.Instance),
-                migrationItemApi: new SqlMigrationItemApi(MigrationFileReader.Instance, option),
-                loggerFactory: loggerFactory);
         }
     }
 
@@ -72,8 +34,10 @@ public static class SqlMigrateHandlerDependency
         =>
         serviceProvider.GetServiceOrThrow<ILoggerFactory>();
 
-    private static SqlMigrationOption GetSqlMigrationOption(this IConfiguration configuration, string configPathKey)
+    private static SqlMigrationOption GetSqlMigrationOption(this IConfigurationSection section)
         =>
-        new(
-            configPath: configuration[configPathKey]);
+        new(configPath: section["ConfigPath"])
+        {
+            BasePath = section["BasePath"]
+        };
 }

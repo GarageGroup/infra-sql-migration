@@ -11,7 +11,7 @@ partial class SqlMigrationItemApi
     public async ValueTask<FlatArray<SqlMigrationItem>> GetMigrationItemsAsync(
         string? migrationItemId, CancellationToken cancellationToken)
     {
-        var yaml = await fileReader.ReadAsync(option.ConfigPath, cancellationToken).ConfigureAwait(false);
+        var yaml = await fileReader.ReadAsync(option.BasePath, option.ConfigPath, cancellationToken).ConfigureAwait(false);
         if (string.IsNullOrEmpty(yaml))
         {
             return default;

@@ -26,7 +26,7 @@ partial class DbChangeLogApi
             return new(string.Empty);
         }
 
-        return new(fileReader.ReadAsync(migrationItem.FilePath, cancellationToken));
+        return new(fileReader.ReadAsync(option.BasePath, migrationItem.FilePath, cancellationToken));
     }
 
     private static string BuildMigrationTransactionQuery(string migrationQuery)

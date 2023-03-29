@@ -23,10 +23,13 @@ internal sealed partial class DbChangeLogApi : IDbChangeLogApi
 
     private readonly IMigrationFileReader fileReader;
 
-    internal DbChangeLogApi(ISqlApi sqlApi, IMigrationFileReader fileReader)
+    private readonly SqlMigrationOption option;
+
+    internal DbChangeLogApi(ISqlApi sqlApi, IMigrationFileReader fileReader, SqlMigrationOption option)
     {
         this.sqlApi = sqlApi;
         this.fileReader = fileReader;
+        this.option = option;
     }
 
     
