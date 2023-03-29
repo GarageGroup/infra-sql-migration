@@ -9,5 +9,5 @@ ENV ConnectionStrings__SqlDb $INPUT_CONNECTION_STRING
 ARG INPUT_CONFIG_PATH
 ENV Migrations__ConfigPath $INPUT_CONFIG_PATH
 
-ENTRYPOINT ["/bin/sh", "/app/GGroupp.Infra.Sql.Migration.Console.dll"]
+ENTRYPOINT ["dotnet", "/app/GGroupp.Infra.Sql.Migration.Console.dll"]
 CMD ["ConnectionString: ${INPUT_CONNECTION_STRING}, Path: ${INPUT_CONFIG_PATH}"]
