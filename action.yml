@@ -11,5 +11,5 @@ runs:
   using: 'docker'
   image: 'docker://ghcr.io/ggrouppfoundation/gg-sql-migration:latest'
   env:
-    CONNECTION_STRING: ${{ inputs.connection_string }}
-    CONFIG_PATH: ${{ inputs.config_path }}
+    ConnectionStrings__SqlDb: ${{ inputs.connection_string }}
+    Migrations__ConfigPath: ${{ inputs.config_path }}
