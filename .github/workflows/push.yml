@@ -36,6 +36,9 @@ jobs:
       - name: Publish Application.csproj
         run: dotnet publish ./src/*/Console.csproj -c Release -o './publish'
 
+      - name: List published files
+        run: ls -la ./publish
+
       - name: Login to Github Packages
         uses: docker/login-action@v2
         with:
