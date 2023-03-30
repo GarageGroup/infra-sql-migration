@@ -1,3 +1,8 @@
 # infra-sql-migration
 
-dotnet run -ConnectionStrings:Db=${{ Db_Connection_String }} -Timeout="00:05:00"
+- name: Run migrations
+  id: run-migrations
+  uses: GGrouppFoundation/infra-sql-migration@v0.0.11-build.5
+  with:
+    connection_string: ${{ secrets.DB_MIGRATION_CONNECTION_STRING }}
+    config_path: 'db/migrations.yaml'

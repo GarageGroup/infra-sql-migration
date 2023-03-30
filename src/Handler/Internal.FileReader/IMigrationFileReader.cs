@@ -5,5 +5,5 @@ namespace GGroupp.Infra;
 
 internal interface IMigrationFileReader
 {
-    Task<string> ReadAsync(string filePath, CancellationToken cancellationToken);
+    Task<string> ReadAsync(string? basePath, string filePath, CancellationToken cancellationToken);
 }

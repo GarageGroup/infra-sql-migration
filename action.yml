@@ -1,0 +1,20 @@
+name: 'gg-sql-migration'
+description: 'SQL migration'
+inputs:
+  connection_string:
+    description: 'Connection string to the database'
+    required: true
+  config_path:
+    description: 'Path to the configuration file'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - run: |
+        docker run --rm \
+          -e ConnectionStrings__SqlDb="${{ inputs.connection_string }}" \
+          -e Migrations__ConfigPath="${{ inputs.config_path }}" \
+          -e Migrations__BasePath="../data" \
+          -v ${{ github.workspace }}:/data \
+          ghcr.io/ggrouppfoundation/gg-sql-migration:latest
+      shell: bash

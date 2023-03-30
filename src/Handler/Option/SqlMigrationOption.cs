@@ -15,4 +15,6 @@ public readonly record struct SqlMigrationOption
     public string ConfigPath
         =>
         string.IsNullOrEmpty(configPath) ? DefaultConfigPath : configPath;
+
+    public string? BasePath { get; init; }
 }
