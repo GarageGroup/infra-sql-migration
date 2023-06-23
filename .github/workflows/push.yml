@@ -25,10 +25,10 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Add GGroupp NuGet Source
+      - name: Add Garage Group NuGet Source
         run: >
           dotnet nuget add source ${{ secrets.GG_NUGET_SOURCE_URL }}
-          -n ggroupp
+          -n garage
           -u ${{ secrets.GG_NUGET_SOURCE_USER_NAME }}
           -p ${{ secrets.GG_NUGET_SOURCE_USER_PASSWORD }}
           --store-password-in-clear-text
@@ -49,8 +49,8 @@ jobs:
           context: .
           file: ./Dockerfile
           tags: |
-            ghcr.io/ggrouppfoundation/gg-sql-migration:${{ steps.vars.outputs.tag }}
-            ghcr.io/ggrouppfoundation/gg-sql-migration:latest
+            ghcr.io/garagegroup/gg-sql-migration:${{ steps.vars.outputs.tag }}
+            ghcr.io/garagegroup/gg-sql-migration:latest
           push: true
 
       - name: Image digest
