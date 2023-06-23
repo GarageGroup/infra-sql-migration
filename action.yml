@@ -16,5 +16,5 @@ runs:
           -e Migrations__ConfigPath="${{ inputs.config_path }}" \
           -e Migrations__BasePath="../data" \
           -v ${{ github.workspace }}:/data \
-          ghcr.io/ggrouppfoundation/gg-sql-migration:latest
+          ghcr.io/garagegroup/gg-sql-migration:latest
       shell: bash
