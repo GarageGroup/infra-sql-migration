@@ -7,8 +7,8 @@
     <Nullable>enable</Nullable>
     <InvariantGlobalization>false</InvariantGlobalization>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <RootNamespace>GGroupp.Infra</RootNamespace>
-    <AssemblyName>GGroupp.Infra.Sql.Migration.Console</AssemblyName>
+    <RootNamespace>GarageGroup.Infra</RootNamespace>
+    <AssemblyName>GarageGroup.Infra.Sql.Migration.Console</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,9 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GGroupp.Infra.Handler.Console" Version="0.0.1" />
-    <PackageReference Include="GGroupp.Infra.Sql.Api" Version="1.4.0" />
-    <PackageReference Include="GGroupp.Infra.Sql.Api.Provider.Microsoft" Version="1.0.0" />
+    <PackageReference Include="GarageGroup.Infra.Handler.Console" Version="0.4.0" />
+    <PackageReference Include="GarageGroup.Infra.Sql.Api" Version="1.5.0" />
+    <PackageReference Include="GarageGroup.Infra.Sql.Api.Provider.Microsoft" Version="1.0.1" />
   </ItemGroup>
 
 </Project>
