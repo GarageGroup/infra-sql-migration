@@ -3,21 +3,21 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
-namespace GGroupp.Infra;
+namespace GarageGroup.Infra;
 
 partial class SqlMigrateHandler
 {
-    public ValueTask<Result<Unit, HandlerFailure>> HandleAsync(Unit handlerData, CancellationToken cancellationToken)
+    public ValueTask<Result<Unit, Failure<HandlerFailureCode>>> HandleAsync(Unit _, CancellationToken cancellationToken)
     {
         if (cancellationToken.IsCancellationRequested)
         {
-            return ValueTask.FromCanceled<Result<Unit, HandlerFailure>>(cancellationToken);
+            return ValueTask.FromCanceled<Result<Unit, Failure<HandlerFailureCode>>>(cancellationToken);
         }
 
         return InnerHandleAsync(cancellationToken);
     }
 
-    private async ValueTask<Result<Unit, HandlerFailure>> InnerHandleAsync(CancellationToken cancellationToken)
+    private async ValueTask<Result<Unit, Failure<HandlerFailureCode>>> InnerHandleAsync(CancellationToken cancellationToken)
     {
         logger.LogInformation("Check if the change log table exists");
         await changeLogApi.EnsureTableAsync(cancellationToken).ConfigureAwait(false);
@@ -29,7 +29,7 @@ partial class SqlMigrateHandler
         if (notExecutedMigrations.IsEmpty)
         {
             logger.LogInformation("All migrations were already applied");
-            return SuccessResult;
+            return Result.Success<Unit>(default);
         }
 
         foreach (var migration in notExecutedMigrations)
@@ -39,6 +39,6 @@ partial class SqlMigrateHandler
         }
 
         logger.LogInformation("All migrations have been applied successfully");
-        return SuccessResult;
+        return Result.Success<Unit>(default);
     }
 }

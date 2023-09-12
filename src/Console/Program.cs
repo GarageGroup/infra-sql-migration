@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace GGroupp.Infra.Sql.Migration.Console;
+namespace GarageGroup.Infra.Sql.Migration.Console;
 
 static class Program
 {

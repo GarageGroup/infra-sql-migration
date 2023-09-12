@@ -1,19 +1,15 @@
 using System;
 using Microsoft.Extensions.Logging;
 
-namespace GGroupp.Infra;
+namespace GarageGroup.Infra;
 
-public sealed partial class SqlMigrateHandler : IHandler<Unit>
+public sealed partial class SqlMigrateHandler : IHandler<Unit, Unit>
 {
     internal static SqlMigrateHandler InternalCreate(
         IDbChangeLogApi changeLogApi, ISqlMigrationItemApi migrationItemApi, ILoggerFactory loggerFactory)
         =>
         new(
             changeLogApi, migrationItemApi, loggerFactory.CreateLogger<SqlMigrateHandler>());
-
-    private static Result<Unit, HandlerFailure> SuccessResult
-        =>
-        Result.Success<Unit>(default);
 
     private readonly IDbChangeLogApi changeLogApi;
 

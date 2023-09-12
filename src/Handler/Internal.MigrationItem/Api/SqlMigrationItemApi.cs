@@ -1,7 +1,7 @@
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace GGroupp.Infra;
+namespace GarageGroup.Infra;
 
 internal sealed partial class SqlMigrationItemApi : ISqlMigrationItemApi
 {

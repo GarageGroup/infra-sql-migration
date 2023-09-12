@@ -6,18 +6,18 @@
     <Nullable>enable</Nullable>
     <InvariantGlobalization>true</InvariantGlobalization>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <RootNamespace>GGroupp.Infra</RootNamespace>
-    <AssemblyName>GGroupp.Infra.Sql.Migration.Handler</AssemblyName>
+    <RootNamespace>GarageGroup.Infra</RootNamespace>
+    <AssemblyName>GarageGroup.Infra.Sql.Migration.Handler</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GGroupp.Infra.Handler.Core" Version="0.0.1" />
-    <PackageReference Include="GGroupp.Infra.Sql.Api.Abstractions" Version="1.3.0" />
+    <PackageReference Include="GarageGroup.Infra.Handler.Core" Version="0.3.0" />
+    <PackageReference Include="GarageGroup.Infra.Sql.Api.Abstractions" Version="1.4.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.1" />
     <PackageReference Include="PrimeFuncPack.Dependency" Version="2.0.2" />
     <PackageReference Include="PrimeFuncPack.Primitives.Strings" Version="2.0.2" />
-    <PackageReference Include="YamlDotNet" Version="13.0.2" />
+    <PackageReference Include="YamlDotNet" Version="13.3.1" />
   </ItemGroup>
 
 </Project>
