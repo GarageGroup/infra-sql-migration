@@ -25,13 +25,13 @@ partial class SqlMigrationItemApi
 
         if (string.IsNullOrEmpty(migrationItemId))
         {
-            return new(migrations.ToFlatArray());
+            return migrations.ToFlatArray();
         }
 
         var lastMigration = migrations.FirstOrDefault(IsMigrationIdMatched);
         if (lastMigration is null)
         {
-            return new(migrations.ToFlatArray());
+            return migrations.ToFlatArray();
         }
 
         var resultList = new List<SqlMigrationItem>(migrations.Length);
@@ -51,7 +51,7 @@ partial class SqlMigrationItemApi
             }
         }
 
-        return resultList;
+        return resultList.ToFlatArray();
 
         bool IsMigrationIdMatched(SqlMigrationItem migrationItem)
             =>
