@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,14 +10,21 @@ partial class DbChangeLogApi
     {
         var migrationQuery = await ReadMigrationQueryAsync(migrationItem, cancellationToken).ConfigureAwait(false);
 
-        var migrationRequest = new DbQuery(migrationQuery);
+        var migrationRequest = new DbQuery(migrationQuery)
+        {
+            TimeoutInSeconds = DbTimeoutInSeconds
+        };
+
         _ = await sqlApi.ExecuteNonQueryAsync(migrationRequest, cancellationToken).ConfigureAwait(false);
 
         var logInsertRequest = new DbQuery(
             query: DbChangeLogInsertQuery,
             parameters: new(
                 new("Id", migrationItem.Id),
-                new("Comment", migrationItem.Comment ?? string.Empty)));
+                new("Comment", migrationItem.Comment.OrEmpty())))
+        {
+            TimeoutInSeconds = DbTimeoutInSeconds
+        };
 
         _ = await sqlApi.ExecuteNonQueryAsync(logInsertRequest, cancellationToken).ConfigureAwait(false);
     }

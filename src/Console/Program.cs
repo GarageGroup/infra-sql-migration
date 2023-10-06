@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace GarageGroup.Infra.Sql.Migration.Console;
 
@@ -9,5 +10,5 @@ static class Program
         MicrosoftDbProvider.Configure("SqlDb")
         .UseSqlApi()
         .UseSqlMigrateHandler("Migrations")
-        .RunConsoleAsync(args);
+        .RunConsoleAsync<SqlMigrateHandler, Unit>(default, args);
 }
