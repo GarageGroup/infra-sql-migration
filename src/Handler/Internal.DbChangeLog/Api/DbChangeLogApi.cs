@@ -2,6 +2,8 @@ namespace GarageGroup.Infra;
 
 internal sealed partial class DbChangeLogApi : IDbChangeLogApi
 {
+    private const int DbTimeoutInSeconds = int.MaxValue;
+
     private const string DbChangeLogCreateTableQuery = """
         IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='_ChangeLogHistory' and xtype='U')
             BEGIN

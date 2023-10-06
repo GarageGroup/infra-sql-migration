@@ -6,6 +6,12 @@ namespace GarageGroup.Infra;
 partial class DbChangeLogApi
 {
     public async ValueTask EnsureTableAsync(CancellationToken cancellationToken)
-        =>
-        await sqlApi.ExecuteNonQueryAsync(new DbQuery(DbChangeLogCreateTableQuery), cancellationToken).ConfigureAwait(false);
+    {
+        var query = new DbQuery(DbChangeLogCreateTableQuery)
+        {
+            TimeoutInSeconds = DbTimeoutInSeconds
+        };
+
+        _ = await sqlApi.ExecuteNonQueryAsync(query, cancellationToken).ConfigureAwait(false);
+    }
 }
