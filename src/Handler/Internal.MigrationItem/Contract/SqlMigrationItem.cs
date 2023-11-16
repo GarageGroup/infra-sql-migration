@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace GarageGroup.Infra;
@@ -6,9 +7,9 @@ internal sealed record class SqlMigrationItem
 {
     public SqlMigrationItem(string id, string filePath, [AllowNull] string comment = null)
     {
-        Id = id ?? string.Empty;
-        FilePath = filePath ?? string.Empty;
-        Comment = string.IsNullOrEmpty(comment) ? null : comment;
+        Id = id.OrEmpty();
+        FilePath = filePath.OrEmpty();
+        Comment = comment.OrNullIfEmpty();
     }
 
     public string Id { get; }

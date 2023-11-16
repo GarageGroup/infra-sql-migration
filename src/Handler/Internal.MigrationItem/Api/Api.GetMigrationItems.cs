@@ -61,7 +61,7 @@ partial class SqlMigrationItemApi
     private static SqlMigrationItem MapItem(MigrationItemYaml itemYaml)
         =>
         new(
-            id: itemYaml.Id ?? string.Empty,
-            filePath: itemYaml.FilePath ?? string.Empty,
+            id: itemYaml.Id.OrEmpty(),
+            filePath: itemYaml.FilePath.OrEmpty(),
             comment: itemYaml.Comment);
 }

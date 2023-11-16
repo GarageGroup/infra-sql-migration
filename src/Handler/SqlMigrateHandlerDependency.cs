@@ -36,7 +36,8 @@ public static class SqlMigrateHandlerDependency
 
     private static SqlMigrationOption GetSqlMigrationOption(this IConfigurationSection section)
         =>
-        new(configPath: section["ConfigPath"])
+        new(
+            configPath: section["ConfigPath"])
         {
             BasePath = section["BasePath"]
         };
