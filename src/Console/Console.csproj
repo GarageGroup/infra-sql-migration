@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <OutputType>Exe</OutputType>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
@@ -20,9 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GarageGroup.Infra.Handler.Console" Version="0.5.0" />
-    <PackageReference Include="GarageGroup.Infra.Sql.Api" Version="1.5.2" />
-    <PackageReference Include="GarageGroup.Infra.Sql.Api.Provider.Microsoft" Version="1.0.2" />
+    <PackageReference Include="GarageGroup.Infra.Handler.Console" Version="0.5.1" />
+    <PackageReference Include="GarageGroup.Infra.Sql.Api" Version="2.1.0" />
+    <PackageReference Include="GarageGroup.Infra.Sql.Api.Provider.Microsoft" Version="2.1.0" />
   </ItemGroup>
 
 </Project>
