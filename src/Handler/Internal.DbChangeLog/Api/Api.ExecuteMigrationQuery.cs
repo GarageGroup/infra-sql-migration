@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -6,7 +5,7 @@ namespace GarageGroup.Infra;
 
 partial class DbChangeLogApi
 {
-    public async ValueTask ExecuteMigrationQueryAsync(SqlMigrationItem migrationItem, CancellationToken cancellationToken)
+    public async Task ExecuteMigrationQueryAsync(SqlMigrationItem migrationItem, CancellationToken cancellationToken)
     {
         var migrationQuery = await ReadMigrationQueryAsync(migrationItem, cancellationToken).ConfigureAwait(false);
 
@@ -17,11 +16,9 @@ partial class DbChangeLogApi
 
         _ = await sqlApi.ExecuteNonQueryAsync(migrationRequest, cancellationToken).ConfigureAwait(false);
 
-        var logInsertRequest = new DbQuery(
-            query: DbChangeLogInsertQuery,
-            parameters: new(
-                new("Id", migrationItem.Id),
-                new("Comment", migrationItem.Comment.OrEmpty())))
+        var logInsertRequest = new DbChangeLogInsertQuery(
+            migrationId: migrationItem.Id,
+            comment: migrationItem.Comment)
         {
             TimeoutInSeconds = DbTimeoutInSeconds
         };
@@ -29,13 +26,13 @@ partial class DbChangeLogApi
         _ = await sqlApi.ExecuteNonQueryAsync(logInsertRequest, cancellationToken).ConfigureAwait(false);
     }
 
-    private ValueTask<string> ReadMigrationQueryAsync(SqlMigrationItem migrationItem, CancellationToken cancellationToken)
+    private Task<string> ReadMigrationQueryAsync(SqlMigrationItem migrationItem, CancellationToken cancellationToken)
     {
         if (string.IsNullOrEmpty(migrationItem.FilePath))
         {
-            return new(string.Empty);
+            return Task.FromResult(string.Empty);
         }
 
-        return new(fileReader.ReadAsync(option.BasePath, migrationItem.FilePath, cancellationToken));
+        return fileReader.ReadAsync(option.BasePath, migrationItem.FilePath, cancellationToken);
     }
 }

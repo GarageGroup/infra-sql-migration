@@ -5,13 +5,7 @@ namespace GarageGroup.Infra;
 
 partial class DbChangeLogApi
 {
-    public async ValueTask EnsureTableAsync(CancellationToken cancellationToken)
-    {
-        var query = new DbQuery(DbChangeLogCreateTableQuery)
-        {
-            TimeoutInSeconds = DbTimeoutInSeconds
-        };
-
-        _ = await sqlApi.ExecuteNonQueryAsync(query, cancellationToken).ConfigureAwait(false);
-    }
+    public Task EnsureTableAsync(CancellationToken cancellationToken)
+        =>
+        sqlApi.ExecuteNonQueryAsync(DbChangeLogCreateTableQuery, cancellationToken).AsTask();
 }

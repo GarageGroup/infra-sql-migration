@@ -2,19 +2,15 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace GarageGroup.Infra;
 
-public readonly record struct SqlMigrationOption
+public sealed record class SqlMigrationOption
 {
     private const string DefaultConfigPath = "migration.yaml";
 
-    private readonly string? configPath;
-
     public SqlMigrationOption([AllowNull] string configPath = DefaultConfigPath)
         =>
-        this.configPath = string.IsNullOrEmpty(configPath) ? null : configPath;
+        ConfigPath = string.IsNullOrWhiteSpace(configPath) ? DefaultConfigPath : configPath;
 
-    public string ConfigPath
-        =>
-        string.IsNullOrEmpty(configPath) ? DefaultConfigPath : configPath;
+    public string ConfigPath { get; }
 
     public string? BasePath { get; init; }
 }
