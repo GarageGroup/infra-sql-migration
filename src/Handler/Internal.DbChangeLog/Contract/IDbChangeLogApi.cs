@@ -5,9 +5,9 @@ namespace GarageGroup.Infra;
 
 internal interface IDbChangeLogApi
 {
-    ValueTask EnsureTableAsync(CancellationToken cancellationToken);
+    Task EnsureTableAsync(CancellationToken cancellationToken);
 
-    ValueTask<DbChangeLogId?> GetLastChangeLogIdAsync(CancellationToken cancellationToken);
+    Task<DbChangeLogId?> GetLastChangeLogIdAsync(CancellationToken cancellationToken);
 
-    ValueTask ExecuteMigrationQueryAsync(SqlMigrationItem migrationItem, CancellationToken cancellationToken);
+    Task ExecuteMigrationQueryAsync(SqlMigrationItem migrationItem, CancellationToken cancellationToken);
 }

@@ -1,9 +1,8 @@
-using System;
 using Microsoft.Extensions.Logging;
 
 namespace GarageGroup.Infra;
 
-public sealed partial class SqlMigrateHandler : IHandler<Unit, Unit>
+internal sealed partial class SqlMigrateHandler : ISqlMigrateHandler
 {
     internal static SqlMigrateHandler InternalCreate(
         IDbChangeLogApi changeLogApi, ISqlMigrationItemApi migrationItemApi, ILoggerFactory loggerFactory)
